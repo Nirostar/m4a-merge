@@ -455,6 +455,7 @@ public class Controller implements Initializable {
             loadTags(files.get(0));
             loadFiles(files);
         }
+        updateChapterMeta();
         this.loading = false;
         this.setUIToNotMerging();
     }
