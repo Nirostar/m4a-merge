@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<SplitPane dividerPositions="0.4" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+           prefHeight="600.0" prefWidth="1033.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <items>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="150.0">
+            <children>
+                <SplitPane dividerPositions="0.8" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                           orientation="VERTICAL" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <items>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                            <children>
+                                <Label layoutX="14.0" layoutY="22.0" prefHeight="17.0" prefWidth="108.0"
+                                       text="Working Directory:" AnchorPane.topAnchor="27.0"/>
+                                <TextField fx:id="workingDirectoryTextField" editable="false" layoutX="6.0"
+                                           layoutY="36.0" prefHeight="25.0" prefWidth="355.0"
+                                           style="-fx-background-color: lightgrey;" AnchorPane.leftAnchor="10.0"
+                                           AnchorPane.rightAnchor="39.0" AnchorPane.topAnchor="45.0"/>
+                                <Button fx:id="chooseDirectoryButton1" layoutX="360.0" layoutY="37.0"
+                                        mnemonicParsing="false" onAction="#changeWorkingDirectoryClicked" text="..."
+                                        AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="45.0"/>
+                                <Label layoutX="9.0" layoutY="71.0" prefHeight="25.0" text="Default Chapter Title: "
+                                       AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="80.0"/>
+                                <ComboBox fx:id="defaultChapterTitleComboBox" editable="true" layoutX="173.0"
+                                          layoutY="71.0" prefHeight="25.0" prefWidth="394.0"
+                                          AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="10.0"
+                                          AnchorPane.topAnchor="80.0"/>
+                                <HBox layoutX="9.0" layoutY="77.0" prefHeight="25.0" spacing="10.0"
+                                      AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
+                                      AnchorPane.topAnchor="115.0">
+                                    <children>
+                                        <Button fx:id="addChapterButton" maxWidth="1.7976931348623157E308"
+                                                mnemonicParsing="false" onAction="#addChapterClicked" prefHeight="25.0"
+                                                text="Add Chapter" HBox.hgrow="ALWAYS"/>
+                                        <MenuButton mnemonicParsing="false" text="Delete">
+                                            <items>
+                                                <MenuItem fx:id="deleteChapterButton" mnemonicParsing="false"
+                                                          onAction="#deleteChapterClicked" text="Chapter"/>
+                                                <MenuItem mnemonicParsing="false" onAction="#deleteAllChapterClicked"
+                                                          text="All Chapters"/>
+                                            </items>
+                                        </MenuButton>
+                                    </children>
+                                </HBox>
+                                <SplitPane dividerPositions="0.6" layoutX="8.0" layoutY="148.0" prefHeight="229.0"
+                                           prefWidth="387.0" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="10.0"
+                                           AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="150.0">
+                                    <items>
+                                        <AnchorPane fx:id="coverPane" minHeight="0.0" minWidth="0.0" prefHeight="158.0"
+                                                    prefWidth="48.0">
+                                            <children>
+                                                <HBox fx:id="coverHBox" alignment="CENTER" prefHeight="229.0"
+                                                      prefWidth="228.0">
+                                                    <children>
+                                                        <ImageView fx:id="cover" fitHeight="221.0" fitWidth="246.0"
+                                                                   onMouseClicked="#coverClicked" pickOnBounds="true"
+                                                                   preserveRatio="true">
+                                                            <image>
+                                                                <Image url="@../no_image.png"/>
+                                                            </image>
+                                                        </ImageView>
+                                                    </children>
+                                                </HBox>
+                                            </children>
+                                        </AnchorPane>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                            <children>
+                                                <Label layoutX="14.0" layoutY="24.0" text="Book Title:"
+                                                       AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
+                                                       AnchorPane.topAnchor="10.0"/>
+                                                <TextField fx:id="bookTitleTextField" layoutX="14.0" layoutY="24.0"
+                                                           prefHeight="25.0" AnchorPane.leftAnchor="10.0"
+                                                           AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="25.0"/>
+                                                <Label layoutX="12.0" layoutY="71.0" text="Author:"
+                                                       AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
+                                                       AnchorPane.topAnchor="55.0"/>
+                                                <TextField fx:id="authorTextField" layoutX="12.0" layoutY="71.0"
+                                                           prefHeight="25.0" AnchorPane.leftAnchor="10.0"
+                                                           AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="70.0"/>
+                                                <Label layoutX="14.0" layoutY="104.0" text="Speaker:"
+                                                       AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
+                                                       AnchorPane.topAnchor="100.0"/>
+                                                <TextField fx:id="speakerTextField" layoutX="14.0" layoutY="104.0"
+                                                           prefHeight="25.0" AnchorPane.leftAnchor="10.0"
+                                                           AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="115.0"/>
+                                                <Label layoutX="14.0" layoutY="152.0" text="Year:"
+                                                       AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
+                                                       AnchorPane.topAnchor="145.0"/>
+                                                <ComboBox fx:id="yearComboBox" layoutX="10.0" layoutY="162.0"
+                                                          prefWidth="150.0" AnchorPane.leftAnchor="10.0"
+                                                          AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="160.0"/>
+                                            </children>
+                                        </AnchorPane>
+                                    </items>
+                                </SplitPane>
+                                <Label layoutX="14.0" layoutY="387.0" text="Output Directory:"
+                                       AnchorPane.bottomAnchor="72.0"/>
+                                <TextField fx:id="outputDirectoryTextField" layoutX="10.0" layoutY="407.0"
+                                           prefHeight="25.0" prefWidth="329.0" AnchorPane.bottomAnchor="45.0"
+                                           AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="100.0"/>
+                                <Button fx:id="chooseDirectoryButton" layoutX="344.0" layoutY="404.0"
+                                        mnemonicParsing="false" onAction="#chooseDirectoryClicked" text="..."
+                                        AnchorPane.bottomAnchor="45.0" AnchorPane.rightAnchor="70.0"/>
+                                <ChoiceBox fx:id="extensionChoiceBox" layoutX="247.0" layoutY="404.0" prefHeight="25.0"
+                                           prefWidth="54.0" AnchorPane.rightAnchor="10.0"/>
+                                <Button fx:id="mergeButton" layoutX="14.0" layoutY="435.0" mnemonicParsing="false"
+                                        onAction="#mergeClicked" prefHeight="25.0" prefWidth="367.0" text="Merge"
+                                        AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0"
+                                        AnchorPane.rightAnchor="10.0"/>
+                                <ProgressBar fx:id="mergeProgressBar" layoutX="14.0" layoutY="443.0" prefHeight="25.0"
+                                             prefWidth="381.0" progress="0.0" visible="false"
+                                             AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0"
+                                             AnchorPane.rightAnchor="10.0"/>
+                                <Label fx:id="finishedLabel" alignment="CENTER" layoutX="19.0" layoutY="443.0"
+                                       prefHeight="25.0" text="Finished" textFill="WHITE" visible="false"
+                                       AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0"
+                                       AnchorPane.rightAnchor="10.0">
+                                    <font>
+                                        <Font name="System Bold" size="14.0"/>
+                                    </font>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="playerPane" maxHeight="1.7976931348623157E308"
+                                    maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="100.0"
+                                    prefWidth="233.0">
+                            <children>
+                                <Button fx:id="playButton" layoutX="14.0" layoutY="77.0" mnemonicParsing="false"
+                                        onAction="#playButtonClicked" text="⏵" AnchorPane.bottomAnchor="10.0"
+                                        AnchorPane.leftAnchor="45.0"/>
+                                <Slider fx:id="timeSlider" layoutX="9.0" layoutY="58.0"
+                                        onMouseClicked="#timeSliderClicked" prefHeight="14.0" prefWidth="216.0"
+                                        AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="10.0"
+                                        AnchorPane.rightAnchor="10.0"/>
+                                <Label fx:id="fileNameLabel" layoutX="13.0" layoutY="14.0" prefHeight="17.0"
+                                       prefWidth="208.0" text="fileNameLabel" AnchorPane.leftAnchor="10.0"
+                                       AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0"/>
+                                <Label fx:id="currentTimeLabel" layoutX="14.0" layoutY="35.0" prefHeight="17.0"
+                                       prefWidth="108.0" text="currentTimeLabel" AnchorPane.bottomAnchor="60.0"
+                                       AnchorPane.leftAnchor="10.0"/>
+                                <Label fx:id="durationLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT"
+                                       layoutX="272.0" layoutY="39.0" prefHeight="17.0" prefWidth="108.0"
+                                       text="durationLabel" AnchorPane.bottomAnchor="60.0"
+                                       AnchorPane.rightAnchor="10.0"/>
+                                <Button fx:id="stopButton" layoutX="44.0" layoutY="81.0" mnemonicParsing="false"
+                                        onAction="#stopButtonClicked" text="⏹" AnchorPane.bottomAnchor="10.0"
+                                        AnchorPane.leftAnchor="115.0"/>
+                                <Button fx:id="prevButton" layoutX="24.0" layoutY="87.0" mnemonicParsing="false"
+                                        onAction="#prevButtonClicked" text="⏮" AnchorPane.bottomAnchor="10.0"
+                                        AnchorPane.leftAnchor="10.0"/>
+                                <Button fx:id="nextButton" layoutX="34.0" layoutY="97.0" mnemonicParsing="false"
+                                        onAction="#nextButtonClicked" text="⏭" AnchorPane.bottomAnchor="10.0"
+                                        AnchorPane.leftAnchor="80.0"/>
+                            </children>
+                        </AnchorPane>
+                    </items>
+                </SplitPane>
+            </children>
+        </AnchorPane>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+            <children>
+                <TreeTableView id="files" fx:id="files" editable="true" layoutX="5.0" layoutY="26.0" prefHeight="563.0"
+                               prefWidth="545.0" showRoot="false" AnchorPane.bottomAnchor="10.0"
+                               AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="45.0"/>
+                <Button fx:id="foldAllButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false"
+                        onAction="#foldAllButtonClicked" prefWidth="70.0" text="Fold all" AnchorPane.leftAnchor="10.0"
+                        AnchorPane.topAnchor="10.0"/>
+                <HBox alignment="CENTER_RIGHT" layoutX="156.0" layoutY="11.0" prefHeight="25.0" spacing="5.0"
+                      AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                    <children>
+                        <Button fx:id="splitChaptersButton" mnemonicParsing="false"
+                                onAction="#splitChaptersButtonClicked" text="Split chapters"/>
+                        <Label prefHeight="25.0" text="at"/>
+                        <ChoiceBox fx:id="splitMinMaxChoiceBox" prefHeight="25.0"/>
+                        <Spinner fx:id="splitNumberSpinner" prefHeight="25.0" prefWidth="55"/>
+                        <ChoiceBox fx:id="splitMinutesTracksChoiceBox" prefHeight="25.0"/>
+                        <Label prefHeight="25.0" text="with suffix"/>
+                        <ComboBox fx:id="splitSuffixComboBox" editable="true" prefWidth="100.0"/>
+                    </children>
+                </HBox>
+            </children>
+        </AnchorPane>
+    </items>
+</SplitPane>
