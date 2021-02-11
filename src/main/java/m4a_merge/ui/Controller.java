@@ -452,8 +452,18 @@ public class Controller implements Initializable {
             loadFromSaveFile(saveFiles.get(0));
         } else {
             List<File> files = List.of(Objects.requireNonNull(directory.listFiles((dir, name) -> name.endsWith(".m4a"))));
-            loadTags(files.get(0));
-            loadFiles(files);
+            if (!files.isEmpty()) {
+                loadTags(files.get(0));
+                loadFiles(files);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Working directory empty!");
+                alert.setHeaderText("Working directory empty!");
+                alert.setContentText("Working directory does not contain any .m4a files!");
+                ButtonType buttonTypeOk = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
+                alert.getButtonTypes().setAll(buttonTypeOk);
+                alert.show();
+            }
         }
         this.loading = false;
         this.setUIToNotMerging();
