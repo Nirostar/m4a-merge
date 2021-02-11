@@ -455,7 +455,6 @@ public class Controller implements Initializable {
             loadTags(files.get(0));
             loadFiles(files);
         }
-        updateChapterMeta();
         this.loading = false;
         this.setUIToNotMerging();
     }
@@ -701,6 +700,7 @@ public class Controller implements Initializable {
                     }
                 }
                 this.files.sort();
+                updateChapterMeta();
             });
             thread.start();
         }
