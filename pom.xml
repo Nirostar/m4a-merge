@@ -13,7 +13,7 @@
 
     <properties>
         <!-- Set this to the class with the main method for your application -->
-        <main-class>com.changenode.BaseApplication</main-class>
+        <main-class>at.nirostar_labs.m4a_merge.Launcher</main-class>
         <!-- Change your app's name to something interesting... but you might want to avoid spaces
         just to safe for compatibility across operating systems. -->
         <app.name>M4A_Merge</app.name>
