@@ -15,9 +15,9 @@
 
     <repositories>
         <repository>
-            <id>spring-libs-release/</id>
-            <name>Spring Lib Release Repository</name>
-            <url>https://repo.spring.io/release/</url>
+            <id>spring-repo</id>
+            <name>Spring Repository</name>
+            <url>https://repo.spring.io/release</url>
         </repository>
     </repositories>
 
@@ -43,19 +43,12 @@
             <artifactId>jaudiotagger</artifactId>
             <version>2.0.3</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/net.sourceforge.jaadec/jaad -->
-        <dependency>
-            <groupId>net.sourceforge.jaadec</groupId>
-            <artifactId>jaad</artifactId>
-            <version>0.8.5</version>
-        </dependency>
         <!-- https://mvnrepository.com/artifact/org.jcodec/jcodec -->
         <dependency>
             <groupId>org.jcodec</groupId>
             <artifactId>jcodec</artifactId>
             <version>0.2.4-SNAPSHOT</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-text</artifactId>
