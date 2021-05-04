@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_10">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_11">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
@@ -12,17 +12,18 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.8.1" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:13-ea+5" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:win:13-ea+5" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:13-ea+5" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:win:13-ea+5" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:13-ea+5" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:win:13-ea+5" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:13-ea+5" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:win:13-ea+5" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:16" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:win:16" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:16" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:win:16" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:16" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:win:16" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-media:16" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-media:win:16" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:16" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:win:16" level="project" />
     <orderEntry type="library" name="Maven: org:jaudiotagger:2.0.3" level="project" />
-    <orderEntry type="library" name="Maven: net.sourceforge.jaadec:jaad:0.8.5" level="project" />
-    <orderEntry type="library" name="Maven: org.jcodec:jcodec:0.2.4-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.jcodec:jcodec:0.2.5" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-text:1.8" level="project" />
   </component>
 </module>
