@@ -44,7 +44,7 @@
         grab a unique UUID via https://www.uuidgenerator.net -->
         <windows.upgrade.uuid>1b69ec01-ce8a-4b54-b600-031d1bf1e3f6</windows.upgrade.uuid>
         <!-- This is used to set many user-visible fields in the Windows Installer. See win-jpackage.txt -->
-        <windows.vendor>Nirstar Labs</windows.vendor>
+        <windows.vendor>nirostar-labs</windows.vendor>
     </properties>
     <dependencies>
         <dependency>
