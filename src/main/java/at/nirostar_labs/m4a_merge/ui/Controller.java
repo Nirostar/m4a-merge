@@ -400,7 +400,7 @@ public class Controller implements Initializable {
         //files.setSortMode();
 
         TreeItem<TableEntry> audiobookItem = new TreeItem<>(new Audiobook());
-        audiobookItem.setExpanded(true);
+        audiobookItem.setExpanded(!this.foldedAll);
 //        TreeItem<TableEntry> chapterItem = new TreeItem<>(new Chapter("Book.m4a"));
 //        chapterItem.setExpanded(true);
 //        TreeItem<TableEntry> track1Item = new TreeItem<>(new Track("Chapter 01.m4a", Duration.ofSeconds(120)));
@@ -563,7 +563,7 @@ public class Controller implements Initializable {
                     }
                 } else {
                     chapterItem = new TreeItem<>(new Chapter(line, chapterNumber++));
-                    chapterItem.setExpanded(true);
+                    chapterItem.setExpanded(!this.foldedAll);
                     this.files.getRoot().getChildren().add(chapterItem);
                 }
             }
@@ -693,7 +693,7 @@ public class Controller implements Initializable {
             Thread thread = new Thread(() -> {
                 this.files.getRoot().getChildren().removeAll(this.files.getRoot().getChildren());
                 TreeItem<TableEntry> chapterItem = new TreeItem<>(new Chapter("Chapter 1", 1));
-                chapterItem.setExpanded(true);
+                chapterItem.setExpanded(!this.foldedAll);
                 this.files.getRoot().getChildren().add(chapterItem);
                 for (File file : files) {
                     try {
@@ -1050,7 +1050,7 @@ public class Controller implements Initializable {
                 chapterItem.setExpanded(false);
             }
             this.foldedAll = true;
-            this.foldAllButton.setText("Unfold all");
+            this.foldAllButton.setText("Expand all");
         }
     }
 

@@ -18,7 +18,7 @@ jobs:
       - name: Build jcodec
         run: |
           cd jcodec
-          mvn clean install
+          mvn -DskipTests clean install
       - name: Download Wix
         uses: i3h/download-release-asset@v1
         with:

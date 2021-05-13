@@ -121,7 +121,7 @@ public class MP4MergeTask extends Task<Void> {
             } else {
                 MetaValue string = MetaValue.createString(entry.getValue().get());
                 itunesMeta.put(entry.getKey().getItunesKey(), string);
-                //keyedMeta.put(entry.getKey().getID3Key(), string);
+                keyedMeta.put(entry.getKey().getID3Key(), string);
             }
         }
         itunesMeta.put(ITunesMetaDataTag.TRACK_NUMBER.getItunesKey(), createMetaValueForTrackNumber(chapter.getTrackNr(), 0));
