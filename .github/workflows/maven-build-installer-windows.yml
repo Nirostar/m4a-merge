@@ -13,6 +13,12 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
+      - name: Check out jcodec
+        run: git clone https://github.com/jcodec/jcodec.git
+      - name: Build jcodec
+        run: |
+          cd jcodec
+          mvn clean install
       - name: Download Wix
         uses: i3h/download-release-asset@v1
         with:
