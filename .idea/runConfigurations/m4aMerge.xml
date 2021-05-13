@@ -1,0 +1,18 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="m4aMerge" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="at.nirostar_labs.m4a_merge.Main" />
+    <module name="m4a_merge" />
+    <selectedOptions>
+      <option name="environmentVariables" visible="false" />
+    </selectedOptions>
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="at.nirostar_labs.m4a_merge.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
