@@ -20,7 +20,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="m4a_merge" target="11" />
+      <module name="m4a_merge" target="16" />
     </bytecodeTargetLevel>
   </component>
 </project>
