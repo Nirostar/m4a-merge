@@ -3,6 +3,7 @@ package at.nirostar_labs.m4a_merge.service;
 import at.nirostar_labs.m4a_merge.model.Chapter;
 import at.nirostar_labs.m4a_merge.model.Track;
 import javafx.beans.property.StringProperty;
+import javafx.concurrent.Task;
 import org.jcodec.common.*;
 import org.jcodec.common.io.FileChannelWrapper;
 import org.jcodec.common.io.SeekableByteChannel;
@@ -21,8 +22,29 @@ import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
 
-public class MP4Service {
-    public void merge(String outputDir, Chapter chapter, List<Track> tracks, Map<ITunesMetaDataTag, StringProperty> m4aAlbumTags, String extension) throws IOException {
+public class MP4MergeTask extends Task<Void> {
+
+    private final String outputDir;
+    private final Chapter chapter;
+    private final List<Track> tracks;
+    private final Map<ITunesMetaDataTag, StringProperty> m4aAlbumTags;
+    private final String extension;
+
+    public MP4MergeTask(String outputDir, Chapter chapter, List<Track> tracks, Map<ITunesMetaDataTag, StringProperty> m4aAlbumTags, String extension) {
+        this.outputDir = outputDir;
+        this.chapter = chapter;
+        this.tracks = tracks;
+        this.m4aAlbumTags = m4aAlbumTags;
+        this.extension = extension;
+    }
+
+    @Override
+    protected Void call() throws Exception {
+        merge(outputDir, chapter, tracks, m4aAlbumTags, extension);
+        return null;
+    }
+
+    private void merge(String outputDir, Chapter chapter, List<Track> tracks, Map<ITunesMetaDataTag, StringProperty> m4aAlbumTags, String extension) throws IOException {
         String filename = String.format("%02d", chapter.getTrackNr()) + " " + chapter.getFilename().replaceAll("[\\\\/:*?\"<>|\t]", "_") + extension;
         String outputPath = outputDir + File.separator + filename;
 
@@ -72,6 +94,7 @@ public class MP4Service {
                             if (System.currentTimeMillis() >= nextUpdate) {
                                 track.setProgress((double) i / n);
                                 chapter.setProgress((double) chapterFrames / numberOfChapterFrames * 0.9);
+                                this.updateProgress(chapterFrames * 0.9, numberOfChapterFrames);
                                 nextUpdate = System.currentTimeMillis() + 100;
                             }
                         }

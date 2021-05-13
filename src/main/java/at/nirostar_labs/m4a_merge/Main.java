@@ -1,6 +1,5 @@
 package at.nirostar_labs.m4a_merge;
 
-import at.nirostar_labs.m4a_merge.service.MP4Service;
 import at.nirostar_labs.m4a_merge.ui.Controller;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -24,8 +23,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        MP4Service mp4Service = new MP4Service();
-        Controller controller = new Controller(primaryStage, mp4Service);
+        Controller controller = new Controller(primaryStage);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));
         fxmlLoader.setController(controller);
         primaryStage.setTitle("M4A Merge");

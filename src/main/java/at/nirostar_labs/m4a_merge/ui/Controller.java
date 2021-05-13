@@ -3,7 +3,7 @@ package at.nirostar_labs.m4a_merge.ui;
 
 import at.nirostar_labs.m4a_merge.model.*;
 import at.nirostar_labs.m4a_merge.service.ITunesMetaDataTag;
-import at.nirostar_labs.m4a_merge.service.MP4Service;
+import at.nirostar_labs.m4a_merge.service.MP4MergeTask;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
@@ -12,6 +12,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -65,7 +66,6 @@ public class Controller implements Initializable {
     private static String NEXT_SYMBOL = "\u23EE";
     private static String PREV_SYMBOL = "\u23ED";
     private final Stage stage;
-    private final MP4Service mp4Service;
 
     private final ObjectProperty<byte[]> imageBytes = new SimpleObjectProperty<>();
 
@@ -170,9 +170,8 @@ public class Controller implements Initializable {
     private boolean loading = false;
     private boolean foldedAll = false;
 
-    public Controller(Stage stage, MP4Service mp4Service) {
+    public Controller(Stage stage) {
         this.stage = stage;
-        this.mp4Service = mp4Service;
     }
 
     private static Boolean filesSortPolicy(TreeTableView<TableEntry> treeTableView) {
@@ -689,7 +688,7 @@ public class Controller implements Initializable {
         saveToFile();
     }
 
-    private void loadFiles(List<File> files) throws TagException, ReadOnlyFileException, CannotReadException, InvalidAudioFrameException, IOException {
+    private void loadFiles(List<File> files) {
         if (files != null) {
             Thread thread = new Thread(() -> {
                 this.files.getRoot().getChildren().removeAll(this.files.getRoot().getChildren());
@@ -703,8 +702,10 @@ public class Controller implements Initializable {
                         Duration length = Duration.ofSeconds(audioFile.getAudioHeader().getTrackLength());
                         int trackNr = Integer.parseInt(audioFile.getTag().getFields(FieldKey.TRACK).get(0).toString());
                         TreeItem<TableEntry> trackEntry = new TreeItem<>(new Track(file.getName(), length, file, trackNr));
-                        chapterItem.getChildren().add(trackEntry);
-                        chapterItem.getValue().setLength(chapterItem.getValue().getLength().plus(length));
+                        Platform.runLater(() -> {
+                            chapterItem.getChildren().add(trackEntry);
+                            chapterItem.getValue().setLength(chapterItem.getValue().getLength().plus(length));
+                        });
                     } catch (CannotReadException | IOException | TagException | ReadOnlyFileException | InvalidAudioFrameException e) {
                         e.printStackTrace();
                     }
@@ -858,13 +859,37 @@ public class Controller implements Initializable {
 
     @FXML
     private void mergeClicked(ActionEvent actionEvent) throws IOException {
+        if (!checkIfDirExistsAndAskUserForPermission()) {
+            return;
+        }
+        setUIToMerging();
+        ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+        for (TreeItem<TableEntry> chapter : files.getRoot().getChildren()) {
+            List<Track> tracks = chapter.getChildren().stream().map(trackTreeItem -> (Track) trackTreeItem.getValue()).collect(Collectors.toList());
+            Task<Void> task = new MP4MergeTask(
+                    outputDirectoryTextField.getText(),
+                    (Chapter) chapter.getValue(),
+                    tracks,
+                    m4aAlbumTags,
+                    extensionChoiceBox.getValue()
+            );
+            executorService.execute(task);
+        }
+        executorService.shutdown();
+        mergeButton.setDisable(false);
+    }
+
+    /**
+     * @return returns true if directory is save to write to, false otherwise
+     */
+    private boolean checkIfDirExistsAndAskUserForPermission() {
         File outputDir = new File(outputDirectoryTextField.getText());
         if (outputDir.exists() && !outputDir.isDirectory()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Output Directory no directory");
-            alert.setContentText("The output directory already exists but is no directory.");
+            alert.setContentText("The output directory already exists as a file but is no directory.");
             alert.show();
-            return;
+            return false;
         }
         String[] fileListInOutputdir = outputDir.list();
         if (outputDir.exists() && fileListInOutputdir != null && fileListInOutputdir.length > 0) {
@@ -877,28 +902,30 @@ public class Controller implements Initializable {
             ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
             alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo, buttonTypeCancel);
             Optional<ButtonType> result = alert.showAndWait();
-            if (!result.isPresent() || result.get() == buttonTypeCancel) {
-                return;
+            if (result.isEmpty() || result.get() == buttonTypeCancel) {
+                return false;
             } else if (result.get() == buttonTypeYes) {
+                Collection<String> unableToDelete = new LinkedList<>();
                 for (File file : outputDir.listFiles()) {
-                    Files.delete(file.toPath());
+                    try {
+                        Files.delete(file.toPath());
+                    } catch (IOException e) {
+                        unableToDelete.add(file.toString());
+                    }
+                }
+                if (!unableToDelete.isEmpty()) {
+                    Alert errorDeletingFiles = new Alert(Alert.AlertType.ERROR);
+                    errorDeletingFiles.setTitle("Not all files in the output directory could be deleted.");
+                    StringBuilder s = new StringBuilder("The following files could not be deleted:\n");
+                    for (String path : unableToDelete) {
+                        s.append("    ").append(path).append("\n");
+                    }
+                    errorDeletingFiles.setContentText(s.toString());
+                    return false;
                 }
             }
         }
-        setUIToMerging();
-        ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-        for (TreeItem<TableEntry> chapter : files.getRoot().getChildren()) {
-            executorService.execute(() -> {
-                List<Track> tracks = chapter.getChildren().stream().map(trackTreeItem -> (Track) trackTreeItem.getValue()).collect(Collectors.toList());
-                try {
-                    mp4Service.merge(outputDirectoryTextField.getText(), (Chapter) chapter.getValue(), tracks, m4aAlbumTags, extensionChoiceBox.getValue());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
-        }
-        executorService.shutdown();
-        mergeButton.setDisable(false);
+        return true;
     }
 
     private void setUIToMerging() {
