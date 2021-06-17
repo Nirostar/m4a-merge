@@ -65,6 +65,7 @@ public class Controller implements Initializable {
     private static String STOP_SYMBOL = "\u23F9";
     private static String NEXT_SYMBOL = "\u23EE";
     private static String PREV_SYMBOL = "\u23ED";
+    private static String DEFAULT_DIR = System.getProperty("user.home");
     private final Stage stage;
 
     private final ObjectProperty<byte[]> imageBytes = new SimpleObjectProperty<>();
@@ -424,7 +425,7 @@ public class Controller implements Initializable {
     protected void changeWorkingDirectoryClicked(ActionEvent event) throws ReadOnlyFileException, CannotReadException, TagException, InvalidAudioFrameException, IOException {
         DirectoryChooser fileChooser = new DirectoryChooser();
         fileChooser.setTitle("Select Audiobook Files");
-        fileChooser.setInitialDirectory(new File("C:/Users/Niklas/Audible/Downloads"));
+        fileChooser.setInitialDirectory(new File(DEFAULT_DIR));
         File directory = fileChooser.showDialog(stage);
         if (directory != null) {
             loadDirectory(directory);
@@ -982,7 +983,7 @@ public class Controller implements Initializable {
         fileChooser.getExtensionFilters().addAll(
                 new ExtensionFilter("Picture Files", "*.jpeg", "*.jpg", "*.png"),
                 new ExtensionFilter("All Files", "*"));
-        fileChooser.setInitialDirectory(new File("C:/Users/Niklas/Audible/Downloads"));
+        fileChooser.setInitialDirectory(new File(DEFAULT_DIR));
         File file = fileChooser.showOpenDialog(stage);
         try (FileInputStream fileInputStream = new FileInputStream(file)) {
             this.imageBytes.set(fileInputStream.readAllBytes());
