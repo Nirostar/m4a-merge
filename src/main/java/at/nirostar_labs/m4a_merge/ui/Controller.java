@@ -436,7 +436,9 @@ public class Controller implements Initializable {
         this.loading = true;
         this.workingDirectoryTextField.setText(directory.getPath());
         this.outputDirectoryTextField.setText(directory.getPath() + File.separator + "merged");
-        List<File> covers = List.of(Objects.requireNonNull(directory.listFiles((dir, name) -> name.contains("cover"))));
+        List<File> covers = List.of(Objects.requireNonNull(directory.listFiles((dir, name) ->
+                name.contains("cover") || name.endsWith(".jpg")
+        )));
         if (covers.size() >= 1) {
             try {
                 this.imageBytes.set((new FileInputStream(covers.get(0)).readAllBytes()));
@@ -451,7 +453,9 @@ public class Controller implements Initializable {
         if (saveFiles.size() == 1) {
             loadFromSaveFile(saveFiles.get(0));
         } else {
-            List<File> files = List.of(Objects.requireNonNull(directory.listFiles((dir, name) -> name.endsWith(".m4a"))));
+            List<File> files = List.of(Objects.requireNonNull(directory.listFiles((dir, name) ->
+                    name.endsWith(".m4a") || name.endsWith(".m4b")
+            )));
             if (!files.isEmpty()) {
                 loadTags(files.get(0));
                 loadFiles(files);
@@ -499,9 +503,9 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
         // Swap interpret and composer
-        // String tmp = m4aAlbumTags.get(ITunesMetaDataTag.ALBUM_INTERPRET).get();
-        // m4aAlbumTags.get(ITunesMetaDataTag.ALBUM_INTERPRET).set(m4aAlbumTags.get(ITunesMetaDataTag.COMPOSER).get());
-        // m4aAlbumTags.get(ITunesMetaDataTag.COMPOSER).set(tmp);
+        String tmp = m4aAlbumTags.get(ITunesMetaDataTag.INTERPRET).get();
+        m4aAlbumTags.get(ITunesMetaDataTag.INTERPRET).set(m4aAlbumTags.get(ITunesMetaDataTag.COMPOSER).get());
+        m4aAlbumTags.get(ITunesMetaDataTag.COMPOSER).set(tmp);
     }
 
     private void setM4ATag(ITunesMetaDataTag key, String value) {
@@ -701,7 +705,9 @@ public class Controller implements Initializable {
                         AudioFile audioFile = AudioFileIO.read(file);
                         //String title = audioFile.getTag().getFields(FieldKey.TITLE).get(0).toString();
                         Duration length = Duration.ofSeconds(audioFile.getAudioHeader().getTrackLength());
-                        int trackNr = Integer.parseInt(audioFile.getTag().getFields(FieldKey.TRACK).get(0).toString());
+                        String trackField = audioFile.getTag().getFields(FieldKey.TRACK).get(0).toString();
+                        trackField = trackField.split("/")[0];
+                        int trackNr = Integer.parseInt(trackField);
                         TreeItem<TableEntry> trackEntry = new TreeItem<>(new Track(file.getName(), length, file, trackNr));
                         Platform.runLater(() -> {
                             chapterItem.getChildren().add(trackEntry);
@@ -985,10 +991,12 @@ public class Controller implements Initializable {
                 new ExtensionFilter("All Files", "*"));
         fileChooser.setInitialDirectory(new File(DEFAULT_DIR));
         File file = fileChooser.showOpenDialog(stage);
-        try (FileInputStream fileInputStream = new FileInputStream(file)) {
-            this.imageBytes.set(fileInputStream.readAllBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (file != null) {
+            try (FileInputStream fileInputStream = new FileInputStream(file)) {
+                this.imageBytes.set(fileInputStream.readAllBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

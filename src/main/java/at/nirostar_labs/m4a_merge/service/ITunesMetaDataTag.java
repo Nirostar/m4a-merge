@@ -14,7 +14,9 @@ public enum ITunesMetaDataTag {
     COPYRIGHT(0xa9637079, "TCOP"),
     TRACK_NUMBER(0x74726b6e, "TRCK"),
     COVER(0x636f7672, "COVER"),
-    CODED_WITH(0xa9746f6f, "TENC");
+    CODED_WITH(0xa9746f6f, "TENC"),
+    COMMENT(0xa9636d74, "COMM"),
+    DESCRIPTION(0X64657363, "DESC");
 
     private final int itunesKey;
     private final String id3Key;
