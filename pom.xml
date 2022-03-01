@@ -64,10 +64,16 @@
             <artifactId>jcodec</artifactId>
             <version>0.2.6-SNAPSHOT</version>
         </dependency>
+        <!--Needed for scripting in chapter names-->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-text</artifactId>
             <version>1.8</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjdk.nashorn</groupId>
+            <artifactId>nashorn-core</artifactId>
+            <version>15.3</version>
         </dependency>
 
         <!-- This downloads the platform specific JavaFX libraries used by the project. -->
