@@ -706,12 +706,12 @@ public class Controller implements Initializable {
                         Platform.runLater(() -> {
                             chapterItem.getChildren().add(trackEntry);
                             chapterItem.getValue().setLength(chapterItem.getValue().getLength().plus(length));
+                            this.files.sort();
                         });
                     } catch (CannotReadException | IOException | TagException | ReadOnlyFileException | InvalidAudioFrameException e) {
                         e.printStackTrace();
                     }
                 }
-                this.files.sort();
                 updateChapterMeta();
             });
             thread.start();
