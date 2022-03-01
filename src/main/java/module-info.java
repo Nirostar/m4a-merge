@@ -7,6 +7,7 @@ module m4a_merge {
 
     requires jcodec;
     requires org.apache.commons.text;
+    requires org.openjdk.nashorn;
     requires org.apache.commons.lang3;
     requires jaudiotagger;
 
